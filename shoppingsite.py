@@ -78,7 +78,24 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
-    return render_template("cart.html")
+    cart_contents = session['cart']
+    melon_objects = []
+    cart_total_cost = 0
+
+    for key in cart_contents:
+        cart_melon = melons.get_by_id(key)
+        cart_total_cost += (cart_melon.price * cart_contents[key])
+        setattr(cart_melon, "quantity", cart_contents[key])
+        setattr(cart_melon, "total_cost",
+                (cart_melon.price * cart_contents[key]))
+        melon_objects.append(cart_melon)
+    
+    print("\n \n\n\n*****************")
+    print(melon_objects)
+
+
+    return render_template("cart.html",
+                        melon_objects=melon_objects, cart_total_cost=cart_total_cost)
 
 
 @app.route("/add_to_cart/<melon_id>")
@@ -89,7 +106,7 @@ def add_to_cart(melon_id):
     page and display a confirmation message: 'Melon successfully added to
     cart'."""
 
-    # TODO: Finish shopping cart functionality
+    # Finish shopping cart functionality
 
     # The logic here should be something like:
     #
@@ -105,10 +122,6 @@ def add_to_cart(melon_id):
     session['cart'][melon_id] = session['cart'].get(melon_id, 0) + 1
 
     flash('Melon successfully added to cart!')
-
-    print("\n\n********************************")
-    print(session['cart'])
-    print("\n\n********************************")
 
     return render_template("cart.html")
 
@@ -128,7 +141,7 @@ def process_login():
     dictionary, look up the user, and store them in the session.
     """
 
-    # TODO: Need to implement this!
+    # TODO Need to implement this!
 
     # The logic here should be something like:
     #
