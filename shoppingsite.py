@@ -78,7 +78,7 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
-    cart_contents = session['cart']
+    cart_contents = session.get('cart', {})
     melon_objects = []
     cart_total_cost = 0
 

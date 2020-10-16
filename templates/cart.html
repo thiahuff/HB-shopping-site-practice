@@ -3,29 +3,32 @@
 
 {% block body %}
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Melon Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for melon in melon_objects %}
-        <tr>
-            <td>{{ melon.common_name }}</td>
-            <td>{{ melon.quantity }}</td>
-            <td>{{ melon.price }}</td>
-            <td>{{ melon.total_cost }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if melon_objects == [] %}
+        <p>Nothing has been added to cart, please keep shopping!</p>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Melon Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for melon in melon_objects %}
+            <tr>
+                <td>{{ melon.common_name }}</td>
+                <td>{{ melon.quantity }}</td>
+                <td>{{ melon.price }}</td>
+                <td>{{ melon.total_cost }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <h3>Total: {{cart_total_cost}}</h3>
+        <h3>Total: {{cart_total_cost}}</h3>
 
-    <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
-
+        <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
+    {% endif %}
 {% endblock %}
